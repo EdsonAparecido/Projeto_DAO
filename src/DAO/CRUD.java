@@ -103,4 +103,18 @@ public class CRUD {
             System.out.println("!ERRO! Não foi possível estar dando update nos dados! ERRO: " + erro.getMessage());
         }
     }
+
+    public void delete(int id){
+        String sql = """
+                delete from inventario where id = ?;
+                """;
+        try(Connection connection = conexao.Conexao();
+            PreparedStatement pStatement = connection.prepareStatement(sql)){
+                pStatement.setInt(1, id);
+                pStatement.executeUpdate();
+                System.out.println("Realizado exclusão dos dados com sucesso!");
+        } catch (SQLException erro) {
+            System.out.println("!ERRO! Não foi possível excluir os dados! ERRO: " + erro.getMessage());
+        }
+    }
 }

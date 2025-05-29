@@ -13,12 +13,7 @@ public class Main {
         List<Produto> tabela = crud.read();
         tabela.forEach(System.out::println);
 
-        produto.setNome("Caneta vermelha");
-        produto.setDescricao("Caneta simples que escreve na cor vermelha");
-        produto.setId(1);
-
-
-        crud.update(produto);
+        crud.delete(1);
 
     }
 }
