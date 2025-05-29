@@ -16,11 +16,11 @@ public class CRUD {
         String sql = """
                 create table if not exists inventario(
                 id int auto_increment Primary Key,
-                nome varchar(15) not null,
+                nome varchar(15) unique not null,
                 descricao Text not null,
-                quantidade int not null,
+                quantidade tinyint not null,
                 preco double not null,
-                total tinyint unsigned
+                total double unsigned
                 );
                 """;
         //Conecta ao DataBase, e executa o comando passado
@@ -41,16 +41,17 @@ public class CRUD {
                 quantidade,
                 preco,
                 total
-                )values(?, ?, ?, ?, ?)
+                )values(?, ?, ?, ?, ?);
                 """;
         try(Connection connection = conexao.Conexao();
-            PreparedStatement statement = connection.prepareStatement(sql)){
-            statement.setString(1, produto.getNome());
-            statement.setString(2, produto.getDescricao());
-            statement.setInt(3,produto.getQuantidade());
-            statement.setDouble(4,produto.getPreco());
-            statement.setDouble(5,produto.getTotal());
-            statement.executeUpdate();
+            PreparedStatement pStatement = connection.prepareStatement(sql)){
+            pStatement.setString(1, produto.getNome());
+            pStatement.setString(2, produto.getDescricao());
+            pStatement.setInt(3,produto.getQuantidade());
+            pStatement.setDouble(4,produto.getPreco());
+            pStatement.setDouble(5,produto.getTotal());
+            pStatement.executeUpdate();
+
             System.out.println("Adicionado os dados às colunas com sucesso!");
         } catch (SQLException erro) {
             System.out.println("!Erro! Não foi possível adicionar os dados às colunas! ERRO: " + erro.getMessage());
@@ -73,11 +74,33 @@ public class CRUD {
                         result.getDouble("preco"),
                         result.getDouble("total")
                         );
-            produtos.add(produto);
+                int idGerado = result.getInt("id");
+                produto.setId(idGerado);
+                produtos.add(produto);
             }
         } catch (SQLException erro) {
             System.out.println("!ERRO! Não foi possível listar a tabela! ERRO: " + erro.getMessage());
         }
         return produtos;
+    }
+
+    public void update(Produto produto){
+        String sql = """
+                update inventario set nome = ?, descricao = ?, quantidade = ?, preco = ?, total = ? where id = ?;
+                """;
+        try(Connection connection = conexao.Conexao();
+            PreparedStatement pStatement = connection.prepareStatement(sql)){
+                pStatement.setString(1, produto.getNome());
+                pStatement.setString(2, produto.getDescricao());
+                pStatement.setInt(3,produto.getQuantidade());
+                pStatement.setDouble(4,produto.getPreco());
+                pStatement.setDouble(5,produto.getTotal());
+                pStatement.setInt(6, produto.getId());
+
+                pStatement.executeUpdate();
+                System.out.println("Realizado update dos dados com sucesso!");
+        } catch (SQLException erro) {
+            System.out.println("!ERRO! Não foi possível estar dando update nos dados! ERRO: " + erro.getMessage());
+        }
     }
 }

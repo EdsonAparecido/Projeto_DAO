@@ -41,6 +41,25 @@ public class Produto {
     public double getTotal() {
         return preco * quantidade;
     }
+    public int getId(){
+        return id;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+    public void setPreco(double preco) {
+        this.preco = preco;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @Override
     public String toString(){
