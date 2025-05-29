@@ -3,12 +3,15 @@ package Model;
 public class Produto {
     //Propriedades da classe
     private String nome;
+    private String descricao;
     private int quantidade;
-    private int preco;
+    private double preco;
+    private int total;
 
     //Qual propriedade devo passar
-    public void Produto(String nome, int quantidade, int preco){
+    public Produto(String nome, String descricao, int quantidade, double preco){
         this.nome = nome;
+        this.descricao = descricao;
         this.quantidade = quantidade;
         this.preco = preco;
     }
@@ -17,11 +20,17 @@ public class Produto {
     public String getNome() {
         return nome;
     }
+    public String getDescricao() {
+        return descricao;
+    }
     public int getQuantidade() {
         return quantidade;
     }
-    public int getPreco() {
+    public double getPreco() {
         return preco;
+    }
+    public double getTotal() {
+        return preco * quantidade;
     }
 
     @Override

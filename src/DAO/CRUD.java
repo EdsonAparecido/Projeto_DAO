@@ -1,7 +1,10 @@
 package DAO;
 
 import JDBC.Conexao;
+import Model.Produto;
+
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -10,14 +13,14 @@ public class CRUD {
     Conexao conexao = new Conexao();
 
     //Metodo que cria uma tabela se ainda não tiver sido criada.
-    public void criarTabela() {
+    public void createTable() {
         String sql = """
                 create table if not exists inventario(
                 id int auto_increment Primary Key,
                 nome varchar(15) not null,
                 descricao Text not null,
                 quantidade int not null,
-                preco int not null,
+                preco double not null,
                 total tinyint unsigned
                 );
                 """;
@@ -29,5 +32,31 @@ public class CRUD {
         } catch (SQLException erro) {
             System.out.println("!Erro! Não foi possível criar tabela! ERRO: " + erro.getMessage());
         }
+    }
+
+    public void create(Produto produto){
+        String sql = """
+                insert into inventario(
+                nome,
+                descricao,
+                quantidade,
+                preco,
+                total
+                )values(?, ?, ?, ?, ?)
+                """;
+        try(Connection connection = conexao.Conexao();
+            PreparedStatement statement = connection.prepareStatement(sql)){
+            statement.setString(1, produto.getNome());
+            statement.setString(2, produto.getDescricao());
+            statement.setInt(3,produto.getQuantidade());
+            statement.setDouble(4,produto.getPreco());
+            statement.setDouble(5,produto.getTotal());
+            statement.executeUpdate();
+            System.out.println("Adicionado os dados às colunas com sucesso!");
+        } catch (SQLException erro) {
+            System.out.println("!Erro! Não foi possível adicionar os dados às colunas! ERRO: " + erro.getMessage());
+        }
+
+
     }
 }
