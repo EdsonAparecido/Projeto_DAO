@@ -2,11 +2,12 @@ package Model;
 
 public class Produto {
     //Propriedades da classe
+    private int id;
     private String nome;
     private String descricao;
     private int quantidade;
     private double preco;
-    private int total;
+    private double total;
 
     //Qual propriedade devo passar
     public Produto(String nome, String descricao, int quantidade, double preco){
@@ -14,6 +15,14 @@ public class Produto {
         this.descricao = descricao;
         this.quantidade = quantidade;
         this.preco = preco;
+    }
+    public Produto(int id, String nome, String descricao, int quantidade, double preco, double total){
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+        this.quantidade = quantidade;
+        this.preco = preco;
+        this.total = total;
     }
 
     //Retorno de nome, quantidade e preço
@@ -35,6 +44,6 @@ public class Produto {
 
     @Override
     public String toString(){
-        return String.format("teste");
+        return String.format("ID: %d NOME:%s DESCRIÇÃO:%s QUANTIDADE:%d PREÇO:¨%f TOTAL:%f", id, nome, descricao, quantidade, preco, total);
     }
 }

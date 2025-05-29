@@ -3,10 +3,9 @@ package DAO;
 import JDBC.Conexao;
 import Model.Produto;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CRUD {
     //Cria objeto que contem a conexão do DataBase
@@ -56,7 +55,29 @@ public class CRUD {
         } catch (SQLException erro) {
             System.out.println("!Erro! Não foi possível adicionar os dados às colunas! ERRO: " + erro.getMessage());
         }
+    }
 
+    public List<Produto> read() {
+        List<Produto> produtos = new ArrayList<>();
+        String sql = "Select * from inventario";
 
+        try(Connection connection = conexao.Conexao();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sql)){
+            while (result.next()){
+                Produto produto = new Produto(
+                        result.getInt("id"),
+                        result.getString("nome"),
+                        result.getString("descricao"),
+                        result.getInt("quantidade"),
+                        result.getDouble("preco"),
+                        result.getDouble("total")
+                        );
+            produtos.add(produto);
+            }
+        } catch (SQLException erro) {
+            System.out.println("!ERRO! Não foi possível listar a tabela! ERRO: " + erro.getMessage());
+        }
+        return produtos;
     }
 }
