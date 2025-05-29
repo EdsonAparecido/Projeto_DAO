@@ -13,24 +13,24 @@ public class CRUD {
 
     //Metodo que cria uma tabela se ainda não tiver sido criada.
     public void createTable() {
-        String sql = """
-                create table if not exists inventario(
-                id int auto_increment Primary Key,
-                nome varchar(15) unique not null,
-                descricao Text not null,
-                quantidade tinyint not null,
-                preco double not null,
-                total double unsigned
-                );
-                """;
-        //Conecta ao DataBase, e executa o comando passado
-        try(Connection connection = conexao.Conexao();
-            Statement statement = connection.createStatement()){
-            statement.execute(sql);
-            System.out.println("Criado tabela com sucesso!");
-        } catch (SQLException erro) {
-            System.out.println("!Erro! Não foi possível criar tabela! ERRO: " + erro.getMessage());
-        }
+            String sql = """
+                    create table if not exists inventario(
+                    id int auto_increment Primary Key,
+                    nome varchar(15) unique not null,
+                    descricao Text not null,
+                    quantidade tinyint not null,
+                    preco double not null,
+                    total double unsigned
+                    );
+                    """;
+            //Conecta ao DataBase, e executa o comando passado
+            try (Connection connection = conexao.Conexao();
+                 Statement statement = connection.createStatement()) {
+                statement.execute(sql);
+                System.out.println("Criado tabela com sucesso!\nTabela de Produtos");
+            } catch (SQLException erro) {
+                System.out.println("!Erro! Não foi possível criar tabela! ERRO: " + erro.getMessage());
+            }
     }
 
     public void create(Produto produto){
@@ -74,8 +74,6 @@ public class CRUD {
                         result.getDouble("preco"),
                         result.getDouble("total")
                         );
-                int idGerado = result.getInt("id");
-                produto.setId(idGerado);
                 produtos.add(produto);
             }
         } catch (SQLException erro) {
