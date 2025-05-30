@@ -24,7 +24,7 @@ public class CRUD {
                     );
                     """;
             //Conecta ao DataBase, e executa o comando passado
-            try (Connection connection = conexao.Conexao();
+            try (Connection connection = conexao.conexao();
                  Statement statement = connection.createStatement()) {
                 statement.execute(sql);
                 System.out.println("Criado tabela com sucesso!\nTabela de Produtos");
@@ -43,7 +43,7 @@ public class CRUD {
                 total
                 )values(?, ?, ?, ?, ?);
                 """;
-        try(Connection connection = conexao.Conexao();
+        try(Connection connection = conexao.conexao();
             PreparedStatement pStatement = connection.prepareStatement(sql)){
             pStatement.setString(1, produto.getNome());
             pStatement.setString(2, produto.getDescricao());
@@ -62,7 +62,7 @@ public class CRUD {
         List<Produto> produtos = new ArrayList<>();
         String sql = "Select * from inventario";
 
-        try(Connection connection = conexao.Conexao();
+        try(Connection connection = conexao.conexao();
             Statement statement = connection.createStatement();
             ResultSet result = statement.executeQuery(sql)){
             while (result.next()){
@@ -86,7 +86,7 @@ public class CRUD {
         String sql = """
                 update inventario set nome = ?, descricao = ?, quantidade = ?, preco = ?, total = ? where id = ?;
                 """;
-        try(Connection connection = conexao.Conexao();
+        try(Connection connection = conexao.conexao();
             PreparedStatement pStatement = connection.prepareStatement(sql)){
                 pStatement.setString(1, produto.getNome());
                 pStatement.setString(2, produto.getDescricao());
@@ -106,7 +106,7 @@ public class CRUD {
         String sql = """
                 delete from inventario where id = ?;
                 """;
-        try(Connection connection = conexao.Conexao();
+        try(Connection connection = conexao.conexao();
             PreparedStatement pStatement = connection.prepareStatement(sql)){
                 pStatement.setInt(1, id);
                 pStatement.executeUpdate();

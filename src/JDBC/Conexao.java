@@ -12,7 +12,7 @@ public class Conexao {
     private String password = "Senha@12345";
 
     //Conexão para se conectar ao DataBase, retorna ao CRUD.
-    public Connection Conexao() throws SQLException {
+    public Connection conexao() throws SQLException {
         Connection connection = DriverManager.getConnection(url, name, password);
         return connection;
     }
